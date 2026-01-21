@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Week 2: How to Open a Checking Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#0f766e;
+  --primary-light:#14b8a6;
+  --primary-dark:#134e4a;
+  --accent:#f59e0b;
+  --bg:#f0fdfa;
+  --card:#ffffff;
+  --text:#134e4a;
+  --text-light:#5f9ea0;
+  --success:#10b981;
+  --error:#ef4444;
+  --border:#99f6e4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  color:var(--text);
+  line-height:1.6;
+}
+.container{
+  max-width:700px;
+  margin:0 auto;
+  padding:20px;
+  min-height:100vh;
+}
+.header{
+  text-align:center;
+  padding:30px 0;
+}
+.week-badge{
+  display:inline-block;
+  background:var(--primary);
+  color:#fff;
+  font-size:0.8rem;
+  font-weight:600;
+  padding:6px 14px;
+  border-radius:20px;
+  margin-bottom:12px;
+  letter-spacing:0.5px;
+}
+h1{
+  font-family:'DM Serif Display',serif;
+  font-size:2rem;
+  color:var(--primary-dark);
+  margin-bottom:8px;
+}
+.subtitle{
+  font-size:1rem;
+  color:var(--text-light);
+}
+.card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:0 4px 20px rgba(15,118,110,0.08);
+}
+.form-group{
+  margin-bottom:20px;
+}
+.form-label{
+  display:block;
+  font-weight:600;
+  margin-bottom:8px;
+  color:var(--primary-dark);
+}
+.form-input{
+  width:100%;
+  padding:14px 16px;
+  border:2px solid var(--border);
+  border-radius:10px;
+  font-size:1rem;
+  font-family:inherit;
+  transition:all 0.2s;
+}
+.form-input:focus{
+  outline:none;
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px rgba(15,118,110,0.1);
+}
+.level-grid{
+  display:grid;
+  gap:12px;
+}
+.level-btn{
+  background:linear-gradient(135deg,#f0fdfa,#ccfbf1);
+  border:2px solid var(--border);
+  border-radius:12px;
+  padding:18px;
+  cursor:pointer;
+  text-align:left;
+  transition:all 0.2s;
+}
+.level-btn:hover{
+  border-color:var(--primary);
+  transform:translateY(-2px);
+  box-shadow:0 4px 15px rgba(15,118,110,0.15);
+}
+.level-btn.selected{
+  border-color:var(--primary);
+  background:linear-gradient(135deg,#ccfbf1,#99f6e4);
+}
+.level-name{
+  font-weight:700;
+  font-size:1.1rem;
+  color:var(--primary-dark);
+  margin-bottom:4px;
+}
+.level-desc{
+  font-size:0.9rem;
+  color:var(--text-light);
+}
+.btn{
+  padding:14px 28px;
+  border-radius:10px;
+  border:none;
+  font-size:1rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+  font-family:inherit;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  color:#fff;
+  box-shadow:0 4px 15px rgba(15,118,110,0.3);
+  width:100%;
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(15,118,110,0.4);
+}
+.btn-primary:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+  transform:none;
+}
+.reading-content{
+  background:linear-gradient(135deg,#f0fdf4,#dcfce7);
+  border:2px solid #86efac;
+  border-radius:12px;
+  padding:24px;
+  margin:20px 0;
+  line-height:1.8;
+}
+.reading-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.4rem;
+  color:#166534;
+  margin-bottom:15px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.reading-section{
+  margin-bottom:20px;
+}
+.reading-section h3{
+  color:#15803d;
+  font-size:1.1rem;
+  margin-bottom:8px;
+}
+.reading-section p{
+  color:#166534;
+  margin-bottom:10px;
+}
+.reading-section ul{
+  margin-left:20px;
+  color:#166534;
+}
+.reading-section li{
+  margin-bottom:6px;
+}
+.highlight-box{
+  background:rgba(255,255,255,0.7);
+  border-left:4px solid #22c55e;
+  padding:12px 15px;
+  margin:15px 0;
+  border-radius:0 8px 8px 0;
+}
+.highlight-box strong{
+  color:#15803d;
+}
+.checklist{
+  background:rgba(255,255,255,0.6);
+  border-radius:10px;
+  padding:15px;
+  margin:15px 0;
+}
+.checklist-title{
+  font-weight:700;
+  color:#15803d;
+  margin-bottom:10px;
+}
+.checklist-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 0;
+  border-bottom:1px solid rgba(34,197,94,0.2);
+}
+.checklist-item:last-child{
+  border-bottom:none;
+}
+.check-icon{
+  color:#22c55e;
+  font-size:1.2rem;
+}
+.question-card{
+  background:#fff;
+  border:2px solid var(--border);
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:15px;
+}
+.question-num{
+  display:inline-block;
+  background:var(--primary);
+  color:#fff;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  text-align:center;
+  line-height:28px;
+  font-weight:600;
+  font-size:0.9rem;
+  margin-right:10px;
+}
+.question-text{
+  font-weight:600;
+  color:var(--primary-dark);
+  margin-bottom:15px;
+  font-size:1.05rem;
+}
+.options{
+  display:grid;
+  gap:10px;
+}
+.option{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  background:#f0fdfa;
+  border:2px solid var(--border);
+  border-radius:10px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.option:hover{
+  border-color:var(--primary-light);
+  background:#ccfbf1;
+}
+.option.selected{
+  border-color:var(--primary);
+  background:#ccfbf1;
+}
+.option.correct{
+  border-color:var(--success);
+  background:#d1fae5;
+}
+.option.incorrect{
+  border-color:var(--error);
+  background:#fee2e2;
+}
+.option-letter{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+  font-size:0.9rem;
+  color:var(--primary-dark);
+}
+.option.selected .option-letter{
+  background:var(--primary);
+  color:#fff;
+}
+.option-text{
+  flex:1;
+  color:var(--text);
+}
+.progress-bar{
+  background:var(--border);
+  border-radius:10px;
+  height:10px;
+  margin-bottom:20px;
+  overflow:hidden;
+}
+.progress-fill{
+  background:linear-gradient(90deg,var(--primary-light),var(--primary));
+  height:100%;
+  transition:width 0.3s ease;
+}
+.progress-text{
+  text-align:center;
+  font-size:0.9rem;
+  color:var(--text-light);
+  margin-bottom:10px;
+}
+.results-card{
+  text-align:center;
+  padding:30px 20px;
+}
+.results-icon{
+  font-size:4rem;
+  margin-bottom:15px;
+}
+.results-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.8rem;
+  color:var(--primary-dark);
+  margin-bottom:10px;
+}
+.results-score{
+  font-size:3rem;
+  font-weight:700;
+  color:var(--primary);
+  margin:15px 0;
+}
+.results-message{
+  font-size:1.1rem;
+  color:var(--text-light);
+  margin-bottom:25px;
+}
+.results-details{
+  background:#f0fdfa;
+  border-radius:10px;
+  padding:15px;
+  margin:20px 0;
+  text-align:left;
+}
+.results-row{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid var(--border);
+}
+.results-row:last-child{
+  border-bottom:none;
+}
+.nav-row{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+.nav-row .btn{
+  flex:1;
+}
+.btn-secondary{
+  background:#f0fdfa;
+  color:var(--primary);
+  border:2px solid var(--border);
+}
+.btn-secondary:hover{
+  background:#ccfbf1;
+  border-color:var(--primary);
+}
+.audio-btn{
+  background:rgba(15,118,110,0.1);
+  border:1px solid var(--border);
+  color:var(--primary);
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:0.9rem;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:15px;
+  transition:all 0.2s;
+}
+.audio-btn:hover{
+  background:rgba(15,118,110,0.2);
+}
+.footer-note{
+  text-align:center;
+  padding:20px;
+  color:var(--text-light);
+  font-size:0.85rem;
+}
+.submitted-msg{
+  background:#d1fae5;
+  border:2px solid #10b981;
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+  color:#065f46;
+  margin-top:20px;
+}
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+
+<script>
+// READING CONTENT FOR EACH LEVEL
+const READINGS = {
+  A1: {
+    title: "How to Open a Bank Account",
+    content: `
+      <div class="reading-section">
+        <h3>🏦 What is a Checking Account?</h3>
+        <p>A checking account is a place to keep your money at the bank. You can put money in and take money out.</p>
+      </div>
+      
+      <div class="reading-section">
+        <h3>📋 What Do You Need?</h3>
+        <p>To open an account, you need:</p>
+        <ul>
+          <li><strong>ID</strong> - A driver's license or passport</li>
+          <li><strong>Social Security Number</strong> - Your SSN</li>
+          <li><strong>Money</strong> - Some banks need $25 or $50 to start</li>
+          <li><strong>Address</strong> - Where you live</li>
+        </ul>
+      </div>
+      
+      <div class="highlight-box">
+        <strong>Tip:</strong> Bring two forms of ID to be safe!
+      </div>
+      
+      <div class="reading-section">
+        <h3>👣 Steps to Open an Account</h3>
+        <ul>
+          <li><strong>Step 1:</strong> Go to a bank</li>
+          <li><strong>Step 2:</strong> Tell them you want to open an account</li>
+          <li><strong>Step 3:</strong> Show your ID</li>
+          <li><strong>Step 4:</strong> Fill out a form</li>
+          <li><strong>Step 5:</strong> Put money in your new account</li>
+        </ul>
+      </div>
+      
+      <div class="highlight-box">
+        <strong>Good to know:</strong> You can also open an account online!
+      </div>
+    `
+  },
+  A2B1: {
+    title: "Opening a Checking Account: A Step-by-Step Guide",
+    content: `
+      <div class="reading-section">
+        <h3>🏦 Why Open a Checking Account?</h3>
+        <p>A checking account helps you manage your daily money. You can:</p>
+        <ul>
+          <li>Pay bills online or by check</li>
+          <li>Use a debit card to buy things</li>
+          <li>Receive your paycheck through direct deposit</li>
+          <li>Keep your money safe</li>
+        </ul>
+      </div>
+      
+      <div class="reading-section">
+        <h3>📋 Documents You Need</h3>
+        <div class="checklist">
+          <div class="checklist-title">Required Documents:</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> Government-issued photo ID (driver's license, state ID, or passport)</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> Social Security Number (SSN) or Individual Taxpayer Identification Number (ITIN)</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> Proof of address (utility bill, lease agreement, or bank statement)</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> Initial deposit (usually $25-$100)</div>
+        </div>
+      </div>
+      
+      <div class="reading-section">
+        <h3>👣 Steps to Open Your Account</h3>
+        <p><strong>1. Choose a bank:</strong> Compare different banks. Look at fees, minimum balance requirements, and ATM locations.</p>
+        <p><strong>2. Gather your documents:</strong> Make sure you have all required identification and proof of address.</p>
+        <p><strong>3. Visit the bank or go online:</strong> Many banks let you open accounts online in about 10 minutes.</p>
+        <p><strong>4. Complete the application:</strong> Provide your personal information, including name, address, date of birth, and SSN.</p>
+        <p><strong>5. Make your first deposit:</strong> Some banks require a minimum opening deposit.</p>
+        <p><strong>6. Set up online banking:</strong> Create a username and password to manage your account online.</p>
+      </div>
+      
+      <div class="highlight-box">
+        <strong>Important:</strong> Ask about monthly fees! Some accounts have fees unless you maintain a minimum balance or set up direct deposit.
+      </div>
+    `
+  },
+  B2C1: {
+    title: "Comprehensive Guide to Opening a Checking Account",
+    content: `
+      <div class="reading-section">
+        <h3>🏦 Understanding Checking Account Options</h3>
+        <p>Before opening an account, it's essential to understand the different types available:</p>
+        <ul>
+          <li><strong>Basic Checking:</strong> Standard accounts with minimal features and potentially lower fees</li>
+          <li><strong>Interest-Bearing Checking:</strong> Accounts that earn interest on your balance, typically requiring higher minimum balances</li>
+          <li><strong>Premium/Relationship Checking:</strong> Accounts offering additional perks like fee waivers, higher ATM reimbursements, and preferential rates on loans</li>
+          <li><strong>Student Checking:</strong> Accounts designed for students with reduced fees and requirements</li>
+        </ul>
+      </div>
+      
+      <div class="reading-section">
+        <h3>📋 Documentation Requirements</h3>
+        <div class="checklist">
+          <div class="checklist-title">Primary Identification (one required):</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> Valid U.S. driver's license or state-issued ID</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> U.S. passport or passport card</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> Permanent Resident Card (Green Card)</div>
+        </div>
+        <div class="checklist">
+          <div class="checklist-title">Additional Requirements:</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> Social Security Number (SSN) or ITIN for tax reporting purposes</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> Proof of current residential address dated within 60 days</div>
+          <div class="checklist-item"><span class="check-icon">✓</span> Secondary ID may be requested (credit card, employee ID, or utility bill)</div>
+        </div>
+      </div>
+      
+      <div class="reading-section">
+        <h3>💰 Fee Structures to Consider</h3>
+        <p>Understanding the fee structure is crucial for avoiding unexpected charges:</p>
+        <ul>
+          <li><strong>Monthly Maintenance Fees:</strong> Typically $5-$25/month, often waivable with minimum balance or direct deposit requirements</li>
+          <li><strong>Overdraft Fees:</strong> Usually $30-$35 per transaction when your balance goes negative</li>
+          <li><strong>ATM Fees:</strong> Out-of-network ATM usage may incur fees from both your bank and the ATM operator</li>
+          <li><strong>Wire Transfer Fees:</strong> Domestic ($15-$30) and international ($35-$50) transfer fees</li>
+          <li><strong>Paper Statement Fees:</strong> Some banks charge $2-$5 for mailed statements</li>
+        </ul>
+      </div>
+      
+      <div class="highlight-box">
+        <strong>Pro Tip:</strong> Before opening an account, request the bank's fee schedule in writing. Federal regulations require banks to disclose all fees. Compare at least three institutions before making your decision, and consider credit unions, which often offer lower fees than traditional banks.
+      </div>
+      
+      <div class="reading-section">
+        <h3>🔒 Security Considerations</h3>
+        <p>When opening your account, inquire about the following security features:</p>
+        <ul>
+          <li>FDIC insurance coverage (up to $250,000 per depositor)</li>
+          <li>Two-factor authentication for online banking</li>
+          <li>Fraud monitoring and alert systems</li>
+          <li>Zero-liability policies for unauthorized transactions</li>
+        </ul>
+      </div>
+    `
+  }
+};
+
+// QUESTIONS FOR EACH LEVEL
+const QUESTIONS = {
+  A1: [
+    {
+      q: "What do you need to open a bank account?",
+      options: ["Only money", "ID and Social Security Number", "Only your address", "A credit card"],
+      correct: 1
+    },
+    {
+      q: "How much money do some banks need to start an account?",
+      options: ["$1,000", "$500", "$25 or $50", "$0"],
+      correct: 2
+    },
+    {
+      q: "What is the FIRST step to open an account?",
+      options: ["Fill out a form", "Go to a bank", "Show your ID", "Put money in"],
+      correct: 1
+    },
+    {
+      q: "Can you open an account online?",
+      options: ["No, never", "Yes, you can", "Only on weekends", "Only with cash"],
+      correct: 1
+    },
+    {
+      q: "What should you bring to be safe?",
+      options: ["One form of ID", "Two forms of ID", "Three forms of ID", "No ID"],
+      correct: 1
+    }
+  ],
+  A2B1: [
+    {
+      q: "What is ONE benefit of having a checking account?",
+      options: ["You can only save money", "You can receive direct deposit", "You must pay cash for everything", "You cannot use a debit card"],
+      correct: 1
+    },
+    {
+      q: "What can you use instead of a Social Security Number?",
+      options: ["A phone number", "An email address", "An ITIN", "A library card"],
+      correct: 2
+    },
+    {
+      q: "What should you compare when choosing a bank?",
+      options: ["Only the bank's name", "Fees, minimum balance, and ATM locations", "Only the building's color", "Nothing - all banks are the same"],
+      correct: 1
+    },
+    {
+      q: "What is the last step after opening your account?",
+      options: ["Show your ID", "Set up online banking", "Choose a bank", "Gather documents"],
+      correct: 1
+    },
+    {
+      q: "Why should you ask about monthly fees?",
+      options: ["Fees are always free", "Some accounts have fees unless you meet certain requirements", "Banks never charge fees", "Fees are the same at all banks"],
+      correct: 1
+    }
+  ],
+  B2C1: [
+    {
+      q: "Which type of checking account typically requires a higher minimum balance?",
+      options: ["Basic Checking", "Student Checking", "Interest-Bearing Checking", "All accounts require the same balance"],
+      correct: 2
+    },
+    {
+      q: "What is the FDIC insurance coverage limit per depositor?",
+      options: ["$100,000", "$250,000", "$500,000", "$1,000,000"],
+      correct: 1
+    },
+    {
+      q: "Which fee is typically the HIGHEST?",
+      options: ["Paper statement fee ($2-$5)", "Monthly maintenance fee ($5-$25)", "Overdraft fee ($30-$35)", "All fees are equal"],
+      correct: 2
+    },
+    {
+      q: "According to the reading, what must banks disclose by federal regulation?",
+      options: ["Their profit margins", "All fees", "Employee salaries", "ATM locations"],
+      correct: 1
+    },
+    {
+      q: "What security feature protects customers from unauthorized transactions?",
+      options: ["Paper statements", "Zero-liability policies", "Monthly fees", "Minimum balance requirements"],
+      correct: 1
+    }
+  ]
+};
+
+// GOOGLE FORM URL
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdAToQoJmHyWuL7ifDiwrdy0fs9-2ha68SI2Uo-1Jg9kFJRHg/formResponse";
+// Field entry IDs
+const FORM_FIELDS = {
+  week: "entry.1442329542",
+  name: "entry.683356736",
+  level: "entry.171721789",
+  score: "entry.413464778",
+  total: "entry.971702683"
+};
+const CURRENT_WEEK = "Week 2";
+
+let state = {
+  screen: 'start',
+  name: '',
+  level: null,
+  currentQuestion: 0,
+  answers: [],
+  submitted: false
+};
+
+function speak(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.85;
+    utterance.lang = 'en-US';
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+function speakReading() {
+  const reading = READINGS[state.level];
+  // Strip HTML tags for speech
+  const text = reading.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  speak(text);
+}
+
+function render() {
+  const app = document.getElementById('app');
+  
+  if (state.screen === 'start') {
+    app.innerHTML = renderStart();
+  } else if (state.screen === 'reading') {
+    app.innerHTML = renderReading();
+  } else if (state.screen === 'questions') {
+    app.innerHTML = renderQuestions();
+  } else if (state.screen === 'results') {
+    app.innerHTML = renderResults();
+  }
+}
+
+function renderStart() {
+  return `
+    <div class="header">
+      <span class="week-badge">WEEK 2</span>
+      <h1>How to Open a Checking Account</h1>
+      <p class="subtitle">Banking & Money Management</p>
+    </div>
+    
+    <div class="card">
+      <div class="form-group">
+        <label class="form-label">Your Full Name</label>
+        <input type="text" class="form-input" id="nameInput" placeholder="Enter your full name" value="${state.name}">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Choose Your Level</label>
+        <div class="level-grid">
+          <button class="level-btn ${state.level === 'A1' ? 'selected' : ''}" onclick="selectLevel('A1')">
+            <div class="level-name">A1 - Beginner</div>
+            <div class="level-desc">Simple words and short sentences</div>
+          </button>
+          <button class="level-btn ${state.level === 'A2B1' ? 'selected' : ''}" onclick="selectLevel('A2B1')">
+            <div class="level-name">A2/B1 - Intermediate</div>
+            <div class="level-desc">More details and vocabulary</div>
+          </button>
+          <button class="level-btn ${state.level === 'B2C1' ? 'selected' : ''}" onclick="selectLevel('B2C1')">
+            <div class="level-name">B2/C1 - Advanced</div>
+            <div class="level-desc">Complex banking terms and analysis</div>
+          </button>
+        </div>
+      </div>
+      
+      <button class="btn btn-primary" onclick="startReading()" id="startBtn" disabled>
+        Start Reading →
+      </button>
+    </div>
+    
+    <p class="footer-note">SQA Education • Banking & Money Management Course</p>
+  `;
+}
+
+function renderReading() {
+  const reading = READINGS[state.level];
+  const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+  
+  return `
+    <div class="header">
+      <span class="week-badge">WEEK 2 • ${levelLabel}</span>
+      <h1>Read the Guide</h1>
+      <p class="subtitle">Read carefully, then answer 5 questions</p>
+    </div>
+    
+    <button class="audio-btn" onclick="speakReading()">
+      🔊 Listen to Reading
+    </button>
+    
+    <div class="reading-content">
+      <div class="reading-title">📖 ${reading.title}</div>
+      ${reading.content}
+    </div>
+    
+    <button class="btn btn-primary" onclick="startQuestions()">
+      I'm Ready for Questions →
+    </button>
+  `;
+}
+
+function renderQuestions() {
+  const questions = QUESTIONS[state.level];
+  const current = questions[state.currentQuestion];
+  const progress = ((state.currentQuestion + 1) / questions.length) * 100;
+  const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+  
+  return `
+    <div class="header" style="padding:20px 0">
+      <span class="week-badge">WEEK 2 • ${levelLabel}</span>
+    </div>
+    
+    <div class="progress-text">Question ${state.currentQuestion + 1} of ${questions.length}</div>
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:${progress}%"></div>
+    </div>
+    
+    <div class="question-card">
+      <button class="audio-btn" onclick="speak('${current.q.replace(/'/g, "\\'")}')">
+        🔊 Listen
+      </button>
+      
+      <div class="question-text">
+        <span class="question-num">${state.currentQuestion + 1}</span>
+        ${current.q}
+      </div>
+      
+      <div class="options">
+        ${current.options.map((opt, i) => `
+          <div class="option ${state.answers[state.currentQuestion] === i ? 'selected' : ''}" onclick="selectAnswer(${i})">
+            <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+            <span class="option-text">${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    
+    <div class="nav-row">
+      ${state.currentQuestion > 0 ? `
+        <button class="btn btn-secondary" onclick="prevQuestion()">← Back</button>
+      ` : ''}
+      <button class="btn btn-primary" onclick="nextQuestion()" ${state.answers[state.currentQuestion] === undefined ? 'disabled' : ''}>
+        ${state.currentQuestion < questions.length - 1 ? 'Next →' : 'See Results'}
+      </button>
+    </div>
+  `;
+}
+
+function renderResults() {
+  const questions = QUESTIONS[state.level];
+  let correct = 0;
+  
+  questions.forEach((q, i) => {
+    if (state.answers[i] === q.correct) correct++;
+  });
+  
+  const percentage = Math.round((correct / questions.length) * 100);
+  const passed = percentage >= 60;
+  const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+  
+  return `
+    <div class="card">
+      <div class="results-card">
+        <div class="results-icon">${passed ? '🎉' : '📚'}</div>
+        <div class="results-title">${passed ? 'Great Job!' : 'Keep Practicing!'}</div>
+        <div class="results-score">${correct} / ${questions.length}</div>
+        <div style="font-size:1.3rem;margin-bottom:10px;">${percentage}%</div>
+        <div class="results-message">
+          ${passed ? 'You understand how to open a checking account!' : 'Review the guide and try again.'}
+        </div>
+        
+        <div class="results-details">
+          <div class="results-row">
+            <span>Student Name:</span>
+            <span>${state.name}</span>
+          </div>
+          <div class="results-row">
+            <span>Level:</span>
+            <span>${levelLabel}</span>
+          </div>
+          <div class="results-row">
+            <span>Score:</span>
+            <span>${correct}/${questions.length} (${percentage}%)</span>
+          </div>
+        </div>
+        
+        ${!state.submitted ? `
+          <button class="btn btn-primary" onclick="submitResults()">
+            ✓ Submit My Results
+          </button>
+        ` : `
+          <div class="submitted-msg">
+            ✅ Your results have been submitted!
+          </div>
+        `}
+        
+        <div class="nav-row">
+          <button class="btn btn-secondary" onclick="reviewAnswers()">Review Answers</button>
+          <button class="btn btn-secondary" onclick="startOver()">Try Again</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function selectLevel(level) {
+  state.level = level;
+  render();
+  checkStartBtn();
+}
+
+function checkStartBtn() {
+  const nameInput = document.getElementById('nameInput');
+  const startBtn = document.getElementById('startBtn');
+  if (nameInput && startBtn) {
+    state.name = nameInput.value.trim();
+    startBtn.disabled = !(state.name && state.level);
+  }
+}
+
+function startReading() {
+  const nameInput = document.getElementById('nameInput');
+  state.name = nameInput.value.trim();
+  if (!state.name || !state.level) return;
+  state.screen = 'reading';
+  render();
+}
+
+function startQuestions() {
+  state.screen = 'questions';
+  state.currentQuestion = 0;
+  state.answers = [];
+  render();
+}
+
+function selectAnswer(index) {
+  state.answers[state.currentQuestion] = index;
+  render();
+}
+
+function prevQuestion() {
+  if (state.currentQuestion > 0) {
+    state.currentQuestion--;
+    render();
+  }
+}
+
+function nextQuestion() {
+  const questions = QUESTIONS[state.level];
+  if (state.currentQuestion < questions.length - 1) {
+    state.currentQuestion++;
+  } else {
+    state.screen = 'results';
+  }
+  render();
+}
+
+function submitResults() {
+  const questions = QUESTIONS[state.level];
+  let correct = 0;
+  questions.forEach((q, i) => {
+    if (state.answers[i] === q.correct) correct++;
+  });
+  
+  const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+  
+  // Submit to Google Form
+  const formData = new FormData();
+  formData.append(FORM_FIELDS.week, CURRENT_WEEK);
+  formData.append(FORM_FIELDS.name, state.name);
+  formData.append(FORM_FIELDS.level, levelLabel);
+  formData.append(FORM_FIELDS.score, correct);
+  formData.append(FORM_FIELDS.total, questions.length);
+  
+  // Send to Google Form (no-cors mode for cross-origin)
+  fetch(GOOGLE_FORM_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData
+  }).then(() => {
+    state.submitted = true;
+    render();
+  }).catch(err => {
+    console.error('Submit error:', err);
+    state.submitted = true;
+    render();
+  });
+}
+
+function reviewAnswers() {
+  alert('Review feature coming soon! For now, try the activity again to practice.');
+}
+
+function startOver() {
+  state.screen = 'start';
+  state.currentQuestion = 0;
+  state.answers = [];
+  state.submitted = false;
+  render();
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  render();
+  document.addEventListener('input', (e) => {
+    if (e.target.id === 'nameInput') {
+      checkStartBtn();
+    }
+  });
+});
+
+render();
+</script>
+</body>
+</html>
