@@ -586,11 +586,13 @@ const QUESTIONS = {
 const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdAToQoJmHyWuL7ifDiwrdy0fs9-2ha68SI2Uo-1Jg9kFJRHg/formResponse";
 // Field entry IDs
 const FORM_FIELDS = {
+  week: "entry.1442329542",
   name: "entry.683356736",
   level: "entry.171721789",
   score: "entry.413464778",
   total: "entry.971702683"
 };
+const CURRENT_WEEK = "Week 1";
 
 let state = {
   screen: 'start',
@@ -913,9 +915,10 @@ function submitResults() {
   
   // Submit to Google Form
   const formData = new FormData();
+  formData.append(FORM_FIELDS.week, CURRENT_WEEK);
   formData.append(FORM_FIELDS.name, state.name);
-  formData.append(FORM_FIELDS.score, correct);
   formData.append(FORM_FIELDS.level, levelLabel);
+  formData.append(FORM_FIELDS.score, correct);
   formData.append(FORM_FIELDS.total, questions.length);
   
   // Send to Google Form (no-cors mode for cross-origin)
