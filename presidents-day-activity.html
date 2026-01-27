@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQA Education - Presidents Day Reading Activity</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .logo {
+            height: 70px;
+            margin-bottom: 15px;
+        }
+        
+        .header h1 {
+            color: #5a2d82;
+            font-size: 1.6em;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1em;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        
+        .card h2 {
+            color: #5a2d82;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #5a2d82;
+        }
+        
+        .level-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .level-btn {
+            padding: 20px 15px;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .level-btn:hover {
+            border-color: #5a2d82;
+            transform: translateY(-2px);
+        }
+        
+        .level-btn.selected {
+            border-color: #5a2d82;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .level-btn .level-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .level-btn .level-desc {
+            font-size: 0.85em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(90, 45, 130, 0.4);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .reading-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+        
+        .reading-section h3 {
+            color: #5a2d82;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .audio-btn {
+            padding: 12px 24px;
+            border: 2px solid #5a2d82;
+            border-radius: 10px;
+            background: white;
+            color: #5a2d82;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .audio-btn:hover {
+            background: #5a2d82;
+            color: white;
+        }
+        
+        .audio-btn.playing {
+            background: #5a2d82;
+            color: white;
+        }
+        
+        .audio-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .question {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .option:hover {
+            border-color: #5a2d82;
+            background: #f8f4ff;
+        }
+        
+        .option.selected {
+            border-color: #5a2d82;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .option.selected .option-letter {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .results-card {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 30px rgba(90, 45, 130, 0.3);
+        }
+        
+        .score-number {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        
+        .score-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .results-message {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .results-detail {
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .submit-status {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .hidden { display: none !important; }
+        
+        @media (max-width: 600px) {
+            .level-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .audio-controls {
+                flex-direction: column;
+            }
+            
+            .audio-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://sqaeducation.org/wp-content/uploads/2022/01/Logo-SQA-education-Purple.png" alt="SQA Education" class="logo" onerror="this.style.display='none'">
+            <h1>Presidents Day Reading Activity</h1>
+            <p>Learn about this important American holiday</p>
+        </div>
+        
+        <div id="app"></div>
+    </div>
+
+    <script>
+        // ============ CONFIGURATION ============
+        // Google Form Configuration - SQA Weekly Readings Form
+        const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdAToQoJmHyWuL7ifDiwrdy0fs9-2ha68SI2Uo-1Jg9kFJRHg/formResponse";
+        const FORM_FIELDS = {
+            name: "entry.683356736",
+            classInfo: "entry.1442329542",
+            activity: "entry.171721789",
+            level: "entry.413464778",
+            score: "entry.971702683",
+            percentage: "entry.1222332572"
+        };
+
+        const CURRENT_ACTIVITY = "Presidents Day";
+
+        // Class options by level
+        const CLASSES_BY_LEVEL = {
+            'A1': [
+                '3071 - Mon/Wed 11:00 AM (Eunice Salazar)',
+                '3081 - Tue/Thu 8:00 PM (Eunice Salazar)'
+            ],
+            'A2B1': [
+                '3070 - Mon/Wed 9:00 AM (Eunice Salazar) - A2',
+                '3072 - Mon/Wed 11:00 AM (Laura Ebel) - B1',
+                '3074 - Mon/Wed 8:00 PM (Laura Ebel) - B1',
+                '3080 - Tue/Thu 11:00 AM (Laura Ebel) - B1',
+                '3082 - Tue/Thu 8:00 PM (Laura Ebel) - B1',
+                '3085 - Tue/Thu 9:45 PM (Eunice Salazar) - B1'
+            ],
+            'B2C1': [
+                '3073 - Mon/Wed 8:00 PM (Angela) - B2',
+                '3076 - Mon/Wed 9:45 PM (Angela) - B2',
+                '3079 - Tue/Thu 11:00 AM (Tom) - B2',
+                '3083 - Tue/Thu 8:00 PM (Angela) - B2',
+                '3084 - Tue/Thu 9:45 PM (Angela) - B2',
+                '3075 - Mon/Wed 8:00 PM (Tom) - C1',
+                '3077 - Mon/Wed 9:45 PM (Tom) - C1'
+            ]
+        };
+
+        // ============ CONTENT BY LEVEL ============
+        const CONTENT = {
+            A1: {
+                title: "Presidents Day",
+                text: `Presidents Day is a holiday in the United States. It is on the third Monday of February every year. This year, Presidents Day is on February 17, 2025.
+
+On this day, Americans remember their presidents. A president is the leader of the country. The United States has had 46 presidents.
+
+Two very important presidents were George Washington and Abraham Lincoln. George Washington was the first president. He helped start the country. His picture is on the one-dollar bill. Abraham Lincoln was the 16th president. He helped end slavery. His picture is on the five-dollar bill and the penny.
+
+Many people do not work on Presidents Day. Schools and banks are closed. Some people go shopping because stores have big sales. Other people spend time with their families.
+
+Presidents Day is a time to learn about American history and remember great leaders.`,
+                questions: [
+                    {
+                        question: "When is Presidents Day?",
+                        options: ["The first Monday of February", "The third Monday of February", "The last Monday of February"],
+                        correct: 1
+                    },
+                    {
+                        question: "Who was the first president of the United States?",
+                        options: ["Abraham Lincoln", "George Washington", "Joe Biden"],
+                        correct: 1
+                    },
+                    {
+                        question: "Whose picture is on the five-dollar bill?",
+                        options: ["George Washington", "Abraham Lincoln", "The current president"],
+                        correct: 1
+                    },
+                    {
+                        question: "What is closed on Presidents Day?",
+                        options: ["Restaurants", "Schools and banks", "Shopping stores"],
+                        correct: 1
+                    },
+                    {
+                        question: "What do some people do on Presidents Day?",
+                        options: ["Go to work", "Go shopping", "Go to school"],
+                        correct: 1
+                    }
+                ]
+            },
+            A2B1: {
+                title: "The History of Presidents Day",
+                text: `Presidents Day is a federal holiday in the United States celebrated on the third Monday of February. Originally, this holiday was created to honor George Washington, the first president, whose birthday is February 22nd.
+
+George Washington is often called the "Father of the Country." He led the American army during the Revolutionary War and helped the United States become an independent nation. After the war, he became the first president in 1789. Americans respected him so much that they wanted to celebrate his birthday as a national holiday.
+
+In 1971, the government changed the holiday. They moved it to the third Monday of February to create a three-day weekend for workers. Around the same time, people started calling it "Presidents Day" instead of "Washington's Birthday." This change allowed Americans to honor all presidents, especially Abraham Lincoln, whose birthday is February 12th.
+
+Abraham Lincoln served as president during the Civil War (1861-1865). He is famous for ending slavery in the United States. Many Americans consider him one of the greatest presidents in history.
+
+Today, Presidents Day is celebrated in different ways. Many people enjoy the day off from work or school. Stores offer special sales, and some communities organize parades or educational events. It's also a popular time to learn about American history and the important leaders who shaped the nation.
+
+While the holiday has become more commercial over the years, it remains an opportunity to reflect on the contributions of American presidents to democracy and freedom.`,
+                questions: [
+                    {
+                        question: "Why was the original holiday created?",
+                        options: ["To honor all presidents", "To honor George Washington", "To give workers a day off"],
+                        correct: 1
+                    },
+                    {
+                        question: "Why is George Washington called the 'Father of the Country'?",
+                        options: ["He had many children", "He helped the US become independent", "He was the oldest president"],
+                        correct: 1
+                    },
+                    {
+                        question: "When did the government move the holiday to the third Monday of February?",
+                        options: ["1789", "1865", "1971"],
+                        correct: 2
+                    },
+                    {
+                        question: "What is Abraham Lincoln famous for?",
+                        options: ["Starting the Revolutionary War", "Ending slavery", "Creating Presidents Day"],
+                        correct: 1
+                    },
+                    {
+                        question: "According to the text, how has Presidents Day changed over the years?",
+                        options: ["It has become less popular", "It has become more commercial", "It is no longer a federal holiday"],
+                        correct: 1
+                    }
+                ]
+            },
+            B2C1: {
+                title: "Presidents Day: Tradition, Commerce, and National Identity",
+                text: `Presidents Day, officially known as Washington's Birthday at the federal level, occupies a peculiar position in the American calendar of civic observances. While it began as a straightforward commemoration of George Washington's birth, the holiday has undergone significant transformations that reflect broader changes in American society and its relationship with historical memory.
+
+The origins of the holiday trace back to the 1880s, when Washington's Birthday became the first federal holiday to honor an individual American. This recognition was hardly surprising given Washington's almost mythical status in the national consciousness. His voluntary relinquishment of power after two terms as president established a precedent that would endure for nearly 150 years, cementing his reputation as a leader who prioritized democratic principles over personal ambition.
+
+The evolution toward "Presidents Day" began with the Uniform Monday Holiday Act of 1971, which restructured several federal holidays to create three-day weekends, ostensibly to boost retail sales and provide workers with more leisure time. Although the federal government never officially changed the holiday's name, the proximity to Abraham Lincoln's birthday on February 12th led many states and commercial entities to rebrand it as a day honoring all presidents.
+
+This transformation has sparked ongoing debates about the nature of civic commemoration in a consumer society. Critics argue that the commercialization of Presidents Day—evidenced by the ubiquitous mattress and car sales—has diluted its educational and patriotic significance. They contend that lumping all presidents together obscures the distinct contributions of figures like Washington and Lincoln while potentially honoring those whose legacies are more controversial.
+
+Defenders of the broader interpretation suggest that the holiday provides an opportunity for citizens to engage with the complexities of presidential history. Rather than venerating individual leaders uncritically, Americans can use the occasion to examine the evolving nature of executive power, the successes and failures of various administrations, and the ongoing project of forming "a more perfect union."
+
+The holiday also raises questions about how democracies should commemorate their leaders. Unlike monarchies, which often celebrate ruling families through elaborate traditions, republics face the challenge of honoring elected officials without sliding into personality cults. Presidents Day, in its current ambiguous form, perhaps reflects this democratic tension—celebrating leadership while remaining wary of excessive veneration.
+
+As Americans mark another Presidents Day, the holiday continues to serve as a mirror reflecting the nation's complicated relationship with its past, its leaders, and its commercial present.`,
+                questions: [
+                    {
+                        question: "According to the passage, why was Washington's recognition as a federal holiday 'hardly surprising'?",
+                        options: ["He was the wealthiest president", "He had achieved almost mythical status in national consciousness", "He created the federal holiday system"],
+                        correct: 1
+                    },
+                    {
+                        question: "What was the primary purpose of the Uniform Monday Holiday Act of 1971?",
+                        options: ["To honor more presidents", "To create three-day weekends for economic and leisure benefits", "To officially rename Washington's Birthday"],
+                        correct: 1
+                    },
+                    {
+                        question: "What concern do critics raise about the commercialization of Presidents Day?",
+                        options: ["It makes the holiday too expensive", "It dilutes the educational and patriotic significance", "It excludes certain presidents from being honored"],
+                        correct: 1
+                    },
+                    {
+                        question: "According to defenders of the broader interpretation, what opportunity does the holiday provide?",
+                        options: ["A chance to increase retail sales", "An opportunity to examine the complexities of presidential history", "A day to honor only the greatest presidents"],
+                        correct: 1
+                    },
+                    {
+                        question: "What 'democratic tension' does the author suggest Presidents Day reflects?",
+                        options: ["The conflict between political parties", "Celebrating leadership while being wary of excessive veneration", "The debate over which presidents deserve recognition"],
+                        correct: 1
+                    }
+                ]
+            }
+        };
+
+        // ============ APPLICATION STATE ============
+        let state = {
+            screen: 'start',
+            name: '',
+            classInfo: '',
+            level: null,
+            currentQuestion: 0,
+            answers: [],
+            showResults: false,
+            submitted: false
+        };
+
+        // ============ SPEECH SYNTHESIS ============
+        let speechUtterance = null;
+        let isSpeaking = false;
+        let isPaused = false;
+
+        function getVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            // Prefer these voices for clarity
+            const preferredVoices = [
+                'Google US English',
+                'Google UK English Female',
+                'Samantha',
+                'Karen',
+                'Daniel',
+                'Microsoft Zira',
+                'Microsoft David'
+            ];
+            
+            for (let pref of preferredVoices) {
+                const voice = voices.find(v => v.name.includes(pref));
+                if (voice) return voice;
+            }
+            
+            // Fallback to any English voice
+            const englishVoice = voices.find(v => v.lang.startsWith('en'));
+            return englishVoice || voices[0];
+        }
+
+        function speak(text) {
+            stopSpeech();
+            
+            if (!('speechSynthesis' in window)) {
+                alert('Sorry, your browser does not support text-to-speech.');
+                return;
+            }
+
+            speechUtterance = new SpeechSynthesisUtterance(text);
+            speechUtterance.voice = getVoice();
+            speechUtterance.rate = 0.9;
+            speechUtterance.pitch = 1;
+            
+            speechUtterance.onstart = () => {
+                isSpeaking = true;
+                isPaused = false;
+                updateAudioButtons();
+            };
+            
+            speechUtterance.onend = () => {
+                isSpeaking = false;
+                isPaused = false;
+                updateAudioButtons();
+            };
+            
+            speechUtterance.onerror = () => {
+                isSpeaking = false;
+                isPaused = false;
+                updateAudioButtons();
+            };
+
+            window.speechSynthesis.speak(speechUtterance);
+        }
+
+        function pauseSpeech() {
+            if (isSpeaking && !isPaused) {
+                window.speechSynthesis.pause();
+                isPaused = true;
+                updateAudioButtons();
+            }
+        }
+
+        function resumeSpeech() {
+            if (isPaused) {
+                window.speechSynthesis.resume();
+                isPaused = false;
+                updateAudioButtons();
+            }
+        }
+
+        function stopSpeech() {
+            window.speechSynthesis.cancel();
+            isSpeaking = false;
+            isPaused = false;
+            speechUtterance = null;
+            updateAudioButtons();
+        }
+
+        function updateAudioButtons() {
+            const playBtn = document.getElementById('playBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const resumeBtn = document.getElementById('resumeBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            
+            if (!playBtn) return;
+            
+            playBtn.classList.toggle('playing', isSpeaking && !isPaused);
+            playBtn.disabled = isSpeaking;
+            
+            if (pauseBtn) {
+                pauseBtn.style.display = (isSpeaking && !isPaused) ? 'flex' : 'none';
+            }
+            if (resumeBtn) {
+                resumeBtn.style.display = isPaused ? 'flex' : 'none';
+            }
+            if (stopBtn) {
+                stopBtn.disabled = !isSpeaking && !isPaused;
+            }
+        }
+
+        // ============ RENDERING ============
+        function render() {
+            const app = document.getElementById('app');
+            
+            switch(state.screen) {
+                case 'start':
+                    app.innerHTML = renderStartScreen();
+                    break;
+                case 'reading':
+                    app.innerHTML = renderReadingScreen();
+                    setTimeout(updateAudioButtons, 100);
+                    break;
+                case 'results':
+                    app.innerHTML = renderResultsScreen();
+                    break;
+            }
+        }
+
+        function renderStartScreen() {
+            const levelSelected = state.level !== null;
+            const classOptions = levelSelected ? CLASSES_BY_LEVEL[state.level] : [];
+            
+            return `
+                <div class="card">
+                    <h2>Welcome! Let's get started</h2>
+                    
+                    <div class="form-group">
+                        <label for="nameInput">Your Name</label>
+                        <input type="text" id="nameInput" placeholder="Enter your full name" value="${state.name}" oninput="updateName(this.value)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Select Your Level</label>
+                        <div class="level-buttons">
+                            <div class="level-btn ${state.level === 'A1' ? 'selected' : ''}" onclick="selectLevel('A1')">
+                                <span class="level-name">A1</span>
+                                <span class="level-desc">Beginner</span>
+                            </div>
+                            <div class="level-btn ${state.level === 'A2B1' ? 'selected' : ''}" onclick="selectLevel('A2B1')">
+                                <span class="level-name">A2/B1</span>
+                                <span class="level-desc">Intermediate</span>
+                            </div>
+                            <div class="level-btn ${state.level === 'B2C1' ? 'selected' : ''}" onclick="selectLevel('B2C1')">
+                                <span class="level-name">B2/C1</span>
+                                <span class="level-desc">Advanced</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group ${!levelSelected ? 'hidden' : ''}">
+                        <label for="classSelect">Select Your Class</label>
+                        <select id="classSelect" onchange="updateClass(this.value)">
+                            <option value="">-- Choose your class --</option>
+                            ${classOptions.map(c => `<option value="${c}" ${state.classInfo === c ? 'selected' : ''}>${c}</option>`).join('')}
+                        </select>
+                    </div>
+                    
+                    <button class="btn" onclick="startReading()" ${!canStart() ? 'disabled' : ''}>
+                        Start Reading
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderReadingScreen() {
+            const content = CONTENT[state.level];
+            const questions = content.questions;
+            const currentQ = questions[state.currentQuestion];
+            const isLastQuestion = state.currentQuestion === questions.length - 1;
+            const hasAnswered = state.answers[state.currentQuestion] !== undefined;
+            
+            return `
+                <div class="card">
+                    <h2>${content.title}</h2>
+                    
+                    <div class="audio-controls">
+                        <button class="audio-btn" id="playBtn" onclick="speak(document.getElementById('readingText').innerText)">
+                            <span>&#9658;</span> Listen
+                        </button>
+                        <button class="audio-btn" id="pauseBtn" onclick="pauseSpeech()" style="display:none;">
+                            <span>&#10074;&#10074;</span> Pause
+                        </button>
+                        <button class="audio-btn" id="resumeBtn" onclick="resumeSpeech()" style="display:none;">
+                            <span>&#9658;</span> Resume
+                        </button>
+                        <button class="audio-btn" id="stopBtn" onclick="stopSpeech()" disabled>
+                            <span>&#9632;</span> Stop
+                        </button>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <div id="readingText">${content.text.replace(/\n\n/g, '</p><p>').replace(/^/, '<p>').replace(/$/, '</p>')}</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2>Question ${state.currentQuestion + 1} of ${questions.length}</h2>
+                    
+                    <div class="question">
+                        <div class="question-number">${state.currentQuestion + 1}</div>
+                        <div class="question-text">${currentQ.question}</div>
+                        <div class="options">
+                            ${currentQ.options.map((opt, i) => `
+                                <div class="option ${state.answers[state.currentQuestion] === i ? 'selected' : ''}" 
+                                     onclick="selectAnswer(${i})">
+                                    <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; margin-top: 20px;">
+                        ${state.currentQuestion > 0 ? `
+                            <button class="btn" style="background: #6c757d; flex: 1;" onclick="prevQuestion()">
+                                Previous
+                            </button>
+                        ` : ''}
+                        <button class="btn" style="flex: 2;" onclick="${isLastQuestion ? 'showResults()' : 'nextQuestion()'}" ${!hasAnswered ? 'disabled' : ''}>
+                            ${isLastQuestion ? 'See Results' : 'Next Question'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderResultsScreen() {
+            const content = CONTENT[state.level];
+            const questions = content.questions;
+            let correct = 0;
+            
+            state.answers.forEach((answer, i) => {
+                if (answer === questions[i].correct) correct++;
+            });
+            
+            const percentage = Math.round((correct / questions.length) * 100);
+            const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+            
+            let message = '';
+            if (percentage >= 80) message = 'Excellent work!';
+            else if (percentage >= 60) message = 'Good job!';
+            else message = 'Keep practicing!';
+            
+            return `
+                <div class="card results-card">
+                    <div class="score-circle">
+                        <span class="score-number">${percentage}%</span>
+                        <span class="score-label">${correct}/${questions.length} correct</span>
+                    </div>
+                    
+                    <div class="results-message">${message}</div>
+                    <div class="results-detail">
+                        Level: ${levelLabel}<br>
+                        Student: ${state.name}<br>
+                        Class: ${state.classInfo}
+                    </div>
+                    
+                    ${state.submitted ? `
+                        <div class="submit-status">
+                            Your results have been submitted to your teacher!
+                        </div>
+                    ` : `
+                        <button class="btn" onclick="submitResults()" style="margin-bottom: 15px;">
+                            Submit to Teacher
+                        </button>
+                    `}
+                    
+                    <button class="btn" style="background: #6c757d;" onclick="startOver()">
+                        Try Again
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <h2>Review Your Answers</h2>
+                    ${questions.map((q, i) => {
+                        const isCorrect = state.answers[i] === q.correct;
+                        return `
+                            <div class="question">
+                                <div class="question-number">${i + 1}</div>
+                                <div class="question-text">${q.question}</div>
+                                <div class="options">
+                                    ${q.options.map((opt, j) => {
+                                        let cls = '';
+                                        if (j === q.correct) cls = 'correct';
+                                        else if (state.answers[i] === j) cls = 'incorrect';
+                                        return `
+                                            <div class="option ${cls}">
+                                                <span class="option-letter">${String.fromCharCode(65 + j)}</span>
+                                                <span>${opt}</span>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        // ============ EVENT HANDLERS ============
+        function updateName(value) {
+            state.name = value;
+        }
+
+        function selectLevel(level) {
+            state.level = level;
+            state.classInfo = '';
+            render();
+        }
+
+        function updateClass(value) {
+            state.classInfo = value;
+            render();
+        }
+
+        function canStart() {
+            return state.name.trim() !== '' && state.level !== null && state.classInfo !== '';
+        }
+
+        function startReading() {
+            if (!canStart()) return;
+            state.screen = 'reading';
+            state.currentQuestion = 0;
+            state.answers = [];
+            render();
+        }
+
+        function selectAnswer(index) {
+            state.answers[state.currentQuestion] = index;
+            render();
+        }
+
+        function nextQuestion() {
+            stopSpeech();
+            state.currentQuestion++;
+            render();
+            window.scrollTo(0, 0);
+        }
+
+        function prevQuestion() {
+            stopSpeech();
+            state.currentQuestion--;
+            render();
+            window.scrollTo(0, 0);
+        }
+
+        function showResults() {
+            stopSpeech();
+            state.screen = 'results';
+            render();
+            window.scrollTo(0, 0);
+        }
+
+        function submitResults() {
+            const content = CONTENT[state.level];
+            const questions = content.questions;
+            let correct = 0;
+            
+            state.answers.forEach((answer, i) => {
+                if (answer === questions[i].correct) correct++;
+            });
+            
+            const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+            const percentage = Math.round((correct / questions.length) * 100);
+            
+            // Submit to Google Form
+            const formData = new FormData();
+            formData.append(FORM_FIELDS.name, state.name);
+            formData.append(FORM_FIELDS.classInfo, state.classInfo);
+            formData.append(FORM_FIELDS.activity, CURRENT_ACTIVITY);
+            formData.append(FORM_FIELDS.level, levelLabel);
+            formData.append(FORM_FIELDS.score, correct + '/' + questions.length);
+            formData.append(FORM_FIELDS.percentage, percentage + '%');
+            
+            fetch(GOOGLE_FORM_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            }).then(() => {
+                state.submitted = true;
+                render();
+            }).catch(err => {
+                console.error('Submit error:', err);
+                state.submitted = true;
+                render();
+            });
+        }
+
+        function startOver() {
+            state.screen = 'start';
+            state.currentQuestion = 0;
+            state.answers = [];
+            state.submitted = false;
+            stopSpeech();
+            render();
+        }
+
+        // ============ INITIALIZATION ============
+        document.addEventListener('DOMContentLoaded', () => {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.getVoices();
+                // Some browsers need this event
+                window.speechSynthesis.onvoiceschanged = () => {
+                    window.speechSynthesis.getVoices();
+                };
+            }
+            render();
+        });
+
+        // Initial render
+        render();
+    </script>
+</body>
+</html>
